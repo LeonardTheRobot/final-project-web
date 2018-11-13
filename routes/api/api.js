@@ -1,10 +1,13 @@
 const express = require('express');
 
 const router = express.Router();
+const ordersRouter = require('./orders');
 
-/* GET home page */
+router.use('/orders', ordersRouter);
+
+/* GET API base */
 router.get('/', (_req, res) => {
-  res.render('index', { title: 'CoffeeBot' });
+  res.send('CoffeeBot API');
 });
 
 module.exports = router;
