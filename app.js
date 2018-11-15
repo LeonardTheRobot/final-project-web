@@ -20,6 +20,11 @@ mongoose.connect(`mongodb://${process.env.DB_URI}`, {
   useNewUrlParser: true,
   user: process.env.DB_USER,
   pass: process.env.DB_PASS,
+}).then(() => {
+  console.log('Connected to database');
+}).catch((err) => {
+  console.error(`Could not connect to database. Exiting...\n${err}`);
+  process.exit(1);
 });
 
 app.use(logger('dev'));
