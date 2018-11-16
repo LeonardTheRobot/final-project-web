@@ -1,8 +1,10 @@
+require('dotenv').config();
 const createError = require('http-errors');
 const express = require('express');
 const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
+const mongoose = require('mongoose');
 
 const indexRouter = require('./routes/index');
 const apiRouter = require('./routes/api/api');
@@ -12,6 +14,18 @@ const app = express();
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
+
+// database setup
+mongoose.connect(`mongodb://${process.env.DB_URI}`, {
+  useNewUrlParser: true,
+  user: process.env.DB_USER,
+  pass: process.env.DB_PASS,
+}).then(() => {
+  console.log('Connected to database');
+}).catch((err) => {
+  console.error(`Could not connect to database. Exiting...\n${err}`);
+  process.exit(1);
+});
 
 app.use(logger('dev'));
 app.use(express.json());
