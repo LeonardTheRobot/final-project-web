@@ -1,8 +1,11 @@
 const express = require('express');
 
-const router = express.Router();
+const robotRouter = require('./robot');
 const ordersRouter = require('./orders');
 
+const router = express.Router();
+
+router.use('/robot', robotRouter);
 router.use('/orders', ordersRouter);
 
 /* GET API base */
