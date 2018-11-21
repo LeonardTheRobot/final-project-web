@@ -30,7 +30,7 @@ Represents an order that is placed through the web interface and handled by the 
 
 Components:
 - user - the user that placed the order
-- zone - the rough area of the map where the user said they are located
+- zone - the rough area of the map where the user said they are located, can be either A, B, C or D
 - items - the items that the user has ordered
 - status - the status of the order, can be either PENDING, IN_PROGRESS, COLLECTION, COMPLETED, FAILED
 - date - this may only be the current date and time

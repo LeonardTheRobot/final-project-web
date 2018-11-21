@@ -3,8 +3,14 @@ const mongoose = require('mongoose');
 const { Schema } = mongoose;
 
 const userSchema = new Schema({
-  name: String,
-  faceImageName: String,
+  name: {
+    type: String,
+    required: true,
+  },
+  faceImageName: {
+    type: String,
+    required: true,
+  },
 });
 
 module.exports = mongoose.model('User', userSchema);
