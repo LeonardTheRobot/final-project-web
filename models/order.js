@@ -1,11 +1,10 @@
 const mongoose = require('mongoose');
 
 const { Schema } = mongoose;
-const { ObjectId } = mongoose.Schema.Types;
 
 const orderSchema = new Schema({
   user: {
-    type: ObjectId,
+    type: String,
     required: true,
   },
   zone: {
@@ -14,7 +13,7 @@ const orderSchema = new Schema({
     required: true,
   },
   items: {
-    type: [ObjectId],
+    type: [String],
     required: true,
   },
   status: {

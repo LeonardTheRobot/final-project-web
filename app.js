@@ -18,6 +18,8 @@ app.set('view engine', 'pug');
 // database setup
 mongoose.connect(`mongodb://${process.env.DB_URI}`, {
   useNewUrlParser: true,
+  useCreateIndex: true,
+  useFindAndModify: false,
   user: process.env.DB_USER,
   pass: process.env.DB_PASS,
 }).then(() => {
