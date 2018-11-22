@@ -32,4 +32,14 @@ router.post('/', async (req, res, next) => {
   }
 });
 
+/* GET one user by name */
+router.get('/:name', async (req, res, next) => {
+  try {
+    const data = await User.find({ name: req.params.name });
+    res.json(data);
+  } catch (err) {
+    next(err);
+  }
+});
+
 module.exports = router;
