@@ -34,6 +34,10 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use('/stylesheets/', express.static(path.join(__dirname, 'node_modules/bootstrap/dist/css/')));
+app.use('/javascripts/', express.static(path.join(__dirname, 'node_modules/jquery/dist/')));
+app.use('/javascripts/', express.static(path.join(__dirname, 'node_modules/popper.js/dist/umd/')));
+app.use('/javascripts/', express.static(path.join(__dirname, 'node_modules/bootstrap/dist/js/')));
 
 app.use('/', indexRouter);
 app.use('/api', apiRouter);
