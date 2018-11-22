@@ -2,4 +2,20 @@ extends layout
 
 block content
   h1= title
-  p Welcome to #{title}
+  h2 System Status
+  .row
+    .col-auto
+      .card
+        .card-body
+          h4.card-title Map
+          #map-container
+            img#map-image(src='/images/CS-LG-2.png')
+            canvas#map-canvas(width='576', height='486')
+          script(src='/javascripts/map.js')
+    .col-auto
+      .card
+        .card-body
+          h4.card-title Order Queue
+          ul
+            - for (let x = 1; x <= 10; x++)
+              li Order #{x}

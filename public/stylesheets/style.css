@@ -6,3 +6,20 @@ body {
 a {
   color: #00B7FF;
 }
+
+#map-container {
+  position: relative;
+}
+
+#map-image {
+  z-index: 1;
+  position: absolute;
+}
+
+#map-canvas {
+  width: 576px;
+  height: 486px;
+  border: 1px solid black;
+  z-index: 2;
+  position: relative;
+}
