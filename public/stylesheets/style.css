@@ -23,3 +23,7 @@ a {
   z-index: 2;
   position: relative;
 }
+
+.table {
+  margin-bottom: 0;
+}
