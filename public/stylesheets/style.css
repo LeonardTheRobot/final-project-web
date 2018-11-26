@@ -27,3 +27,8 @@ a {
 .table {
   margin-bottom: 0;
 }
+
+#order-queue-table-body ul {
+  padding-left: 1rem;
+  margin-bottom: 0;
+}

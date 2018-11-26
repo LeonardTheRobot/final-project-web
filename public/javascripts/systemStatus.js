@@ -35,25 +35,35 @@ function updateMap(robotLocation) {
 }
 
 function updateOrderQueue(robotOrderQueue) {
-  console.log(`Order Queue:\n${JSON.stringify(robotOrderQueue)}`);
-  robotOrderQueue.forEach((orderId) => {
+  // Clear the table
+  $('#order-queue-table-body').empty();
+  // Iterate over each order in the queue
+  robotOrderQueue.forEach((orderId, i) => {
     $.get(`/api/orders/${orderId}`, (orderData) => {
-      console.log(`Order Data ${orderId}:\n${JSON.stringify(orderData)}`);
+      // Create a bullet point list of the items in this order
       const itemsList = $('<ul>');
       orderData.items.forEach((item) => {
         itemsList.append($('<li>').text(item));
       });
-      // const itemsList = $('<ul>').append(
-      //   $('<li>').text()
-      // );
-      const tableRow = $('<tr>').append(
+
+      // Create a new table row from the data for this order
+      const row = $('<tr>').append(
         $('<td>').text(orderId),
         $('<td>').text(orderData.user),
         $('<td>').text(orderData.zone),
         $('<td>').append(itemsList),
         $('<td>').text(orderData.status),
-      ).appendTo('#order-queue-table-body');
-      console.log(tableRow);
+      );
+
+      // Append the row in the correct order based on the orderQueue rather than the order in which
+      // the order API calls returned
+      // If this is the first in the queue or if this is the first API return, place the row first
+      // Otherwise, place the row in its correct position based on the index of the forEach loop
+      if (i === 0 || $('#order-queue-table-body > tr').length === 0) {
+        $('#order-queue-table-body').prepend(row);
+      } else {
+        $(`#order-queue-table-body > tr:nth-child(${i})`).after(row);
+      }
     });
   });
 }
