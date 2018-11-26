@@ -5,7 +5,18 @@ mapContext.fillStyle = 'red';
 const robotSize = 10;
 let lastLocation;
 
-function drawMap(robotData) {
+/**
+ * Transform coordinate object of form: { x: ?, y: ? }, to
+ * pixel x and y values to draw on the map
+ */
+function coordsToPixels(coordObj) {
+  return {
+    x: mapCanvas.width / 2 - coordObj.x / 0.05,
+    y: coordObj.y / 0.05 + mapCanvas.height / 2,
+  };
+}
+
+function updateMap(robotData) {
   if (robotData.location) {
     const rx = robotData.location.x;
     const ry = robotData.location.y;
@@ -13,10 +24,9 @@ function drawMap(robotData) {
       console.log('Skip draw (no change)');
     } else {
       console.log('Draw');
-      const px = (robotData.location.x / 0.05) - (robotSize / 2);
-      const py = (robotData.location.y / 0.05) - (robotSize / 2);
+      const pixelsObj = coordsToPixels(robotData.location);
       mapContext.clearRect(0, 0, mapCanvas.width, mapCanvas.height);
-      mapContext.fillRect(px, py, robotSize, robotSize);
+      mapContext.fillRect(pixelsObj.x, pixelsObj.y, robotSize, robotSize);
       lastLocation = robotData.location;
     }
   } else {
@@ -27,14 +37,16 @@ function drawMap(robotData) {
 function update() {
   $.get('/api/robot', (robotData) => {
     requestAnimationFrame(() => {
-      drawMap(robotData);
+      updateMap(robotData);
     });
   });
 }
 
 update();
 setInterval(() => {
-  update();
-  // $.get('/api/robot', (robotData) => {
-  // requestAnimationFrame(drawMap);
-}, 10000);
+  if ($('#auto-update-checkbox').is(':checked')) {
+    update();
+  } else {
+    console.log('Auto-update not checked');
+  }
+}, 1000);

@@ -3,6 +3,11 @@ extends layout
 block content
   h1= title
   h2 System Status
+  form
+    .checkbox
+      label
+        input#auto-update-checkbox(type='checkbox', value='')
+        |  Auto-update
   .row
     .col-auto
       .card
