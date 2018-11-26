@@ -11,7 +11,6 @@ block content
           #map-container
             img#map-image(src='/images/CS-LG-2.png')
             canvas#map-canvas(width='576', height='486')
-          script(src='/javascripts/map.js')
     .col-auto
       .card
         .card-body
@@ -19,3 +18,4 @@ block content
           ul
             - for (let x = 1; x <= 10; x++)
               li Order #{x}
+  script(src='/javascripts/systemStatus.js')
