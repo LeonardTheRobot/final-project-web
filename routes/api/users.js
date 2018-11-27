@@ -1,28 +1,27 @@
 const express = require('express');
 
-const Order = require('../../models/order');
+const User = require('../../models/user');
 
 const router = express.Router();
 
-/* GET all orders */
-router.get('/', async (_req, res, next) => {
+/* GET all users */
+router.get('/', async (req, res, next) => {
   try {
-    const data = await Order.find({});
+    const data = await User.find({});
     res.json(data);
   } catch (err) {
     next(err);
   }
 });
 
-/* POST create an order */
+/* POST create a new user */
 router.post('/', async (req, res, next) => {
   try {
-    const order = new Order({
-      user: req.body.user,
-      zone: req.body.zone,
-      items: req.body.items,
+    const user = new User({
+      name: req.body.name,
+      faceImageName: req.body.faceImageName,
     });
-    const data = await order.save();
+    const data = await user.save();
     res.status(201).json(data);
   } catch (err) {
     if (err.name === 'ValidationError' || err.name === 'CastError') {
@@ -33,10 +32,10 @@ router.post('/', async (req, res, next) => {
   }
 });
 
-/* GET one order */
-router.get('/:orderId', async (req, res, next) => {
+/* GET one user by name */
+router.get('/:name', async (req, res, next) => {
   try {
-    const data = await Order.findById(req.params.orderId);
+    const data = await User.find({ name: req.params.name });
     res.json(data);
   } catch (err) {
     next(err);

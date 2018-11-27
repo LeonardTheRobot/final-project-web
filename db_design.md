@@ -18,7 +18,7 @@ Components:
   "orderQueue": [ObjectId],
   "inventory": [
     {
-      "itemId": ObjectId,
+      "item": String,
       "quantity": Number
     }
   ]
@@ -29,18 +29,18 @@ Components:
 Represents an order that is placed through the web interface and handled by the robot.
 
 Components:
-- user - the user that placed the order
+- user - the name of the user that placed the order
 - zone - the rough area of the map where the user said they are located, can be either A, B, C or D
-- items - the items that the user has ordered
+- items - the names of the items that the user has ordered
 - status - the status of the order, can be either PENDING, IN_PROGRESS, COLLECTION, COMPLETED, FAILED
 - date - this may only be the current date and time
 
 ```javascript
 {
   "_id": ObjectId,
-  "user": ObjectId,
+  "user": String,
   "zone": String,
-  "items": [ObjectId],
+  "items": [String],
   "status": String,
   "orderedAt": Date
 }
@@ -50,7 +50,7 @@ Components:
 Represents an item that our system can deliver. For example, coffee or snacks.
 
 Components:
-- name - the name of the item as text
+- name - the name of the item as text, **_unique index_**
 - price - the price of the item in pounds
 
 ```javascript
@@ -65,7 +65,7 @@ Components:
 Represents a user signed up to our system.
 
 Components:
-- name - the name of the user as text, this will appear in the web interface when selecting who is ordering
+- name - the name of the user as text, this will appear in the web interface when selecting who is ordering, **_unique index_**
 - faceImageName - the name of the image file of this user's face, this will be used by the facial recognition component to recognise the user, points to an image in public/images
 
 ```javascript
