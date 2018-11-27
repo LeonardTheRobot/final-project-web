@@ -48,6 +48,7 @@ function updateOrderQueue(robotOrderQueue) {
 
       // Create a new table row from the data for this order
       const row = $('<tr>').append(
+        $('<td>').text(i+1),
         $('<td>').text(orderId),
         $('<td>').text(orderData.user),
         $('<td>').text(orderData.zone),
