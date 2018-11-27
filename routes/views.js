@@ -2,9 +2,9 @@ const express = require('express');
 
 const router = express.Router();
 
-/* GET home page */
+/* GET system status page */
 router.get('/', (_req, res) => {
-  res.render('index', { title: 'CoffeeBot' });
+  res.render('systemStatus');
 });
 
 module.exports = router;

@@ -1,8 +1,29 @@
-body {
-  padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+.container-custom {
+  padding: 2rem;
 }
 
-a {
-  color: #00B7FF;
+#map-container {
+  position: relative;
+}
+
+#map-image {
+  z-index: 1;
+  position: absolute;
+}
+
+#map-canvas {
+  width: 576px;
+  height: 486px;
+  border: 1px solid black;
+  z-index: 2;
+  position: relative;
+}
+
+.table {
+  margin-bottom: 0;
+}
+
+#order-queue-table-body ul {
+  padding-left: 1rem;
+  margin-bottom: 0;
 }
