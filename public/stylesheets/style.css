@@ -27,3 +27,7 @@
   padding-left: 1rem;
   margin-bottom: 0;
 }
+
+.navbar-brand > img {
+  width: 2rem;
+}
