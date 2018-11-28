@@ -17,20 +17,8 @@ block content
               select#zone-select.form-control(name='zone')
                 option(disabled, selected) Choose a zone
           .form-group
-            label Items
-            fieldset.form-group
-              .row
-                label.col-form-label.col-md-1 A
-                .col-md-2
-                  input.form-control(name='A', type='number', min='0', max='5', value='0')
-                label.col-form-label.col-md-1 B
-                .col-md-2
-                  input.form-control(type='number', min='0', max='5', value='0')
-                label.col-form-label.col-md-1 C
-                .col-md-2
-                  input.form-control(type='number', min='0', max='5', value='0')
-                label.col-form-label.col-md-1 D
-                .col-md-2
-                  input.form-control(type='number', min='0', max='5', value='0')
+            label(for='items-card') Items
+            #items-card.card
+              .card-body
           button.btn.btn-primary(type='submit') Submit
   script(src='/javascripts/placeOrder.js')
