@@ -9,6 +9,6 @@ router.get('/', (_req, res) => {
 
 router.get('/order', (_req, res) => {
   res.render('placeOrder');
-})
+});
 
 module.exports = router;
