@@ -7,4 +7,8 @@ router.get('/', (_req, res) => {
   res.render('systemStatus');
 });
 
+router.get('/order', (_req, res) => {
+  res.render('placeOrder');
+})
+
 module.exports = router;

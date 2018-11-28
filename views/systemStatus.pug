@@ -1,32 +1,33 @@
 extends layout
 
 block content
-  h2 System Status
-  form
-    .checkbox
-      label
-        input#auto-update-checkbox(type='checkbox', value='')
-        |  Auto-update
-  .row
-    .col-auto
-      .card
-        .card-body
-          h4.card-title Map
-          #map-container
-            img#map-image(src='/images/CS-LG-2.png')
-            canvas#map-canvas(width='576', height='486')
-    .col-auto
-      .card
-        .card-body
-          h4.card-title Order Queue
-          table.table.table-striped.table-bordered
-            thead
-              tr
-                th #
-                th ID
-                th User
-                th Zone
-                th Items
-                th Status
-            tbody#order-queue-table-body
+  .container-fluid.container-custom
+    h2 System Status
+    form
+      .checkbox
+        label
+          input#auto-update-checkbox(type='checkbox', value='')
+          |  Auto-update
+    .row
+      .col-auto
+        .card
+          .card-body
+            h4.card-title Map
+            #map-container
+              img#map-image(src='/images/CS-LG-2.png')
+              canvas#map-canvas(width='576', height='486')
+      .col-auto
+        .card
+          .card-body
+            h4.card-title Order Queue
+            table.table.table-striped.table-bordered
+              thead
+                tr
+                  th #
+                  th ID
+                  th User
+                  th Zone
+                  th Items
+                  th Status
+              tbody#order-queue-table-body
   script(src='/javascripts/systemStatus.js')
