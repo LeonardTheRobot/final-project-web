@@ -1,5 +1,7 @@
 .navbar.navbar-expand-lg.navbar-light.bg-light
-  a.navbar-brand(href='/') CoffeeBot
+  a.navbar-brand(href='/')
+    img.d-inline-block.align-center(src='/images/coffee.png')
+    |  CoffeeBot
   button.navbar-toggler(type='button', data-toggle='collapse', data-target='#navbar-nav', aria-controls='#navbar-nav')
     span.navbar-toggler-icon
   #navbar-nav.collapse.navbar-collapse
@@ -7,6 +9,6 @@
       li.nav-item
         a.nav-link(href='/') System Status
       li.nav-item
-        a.nav-link(href='#') Place Order
+        a.nav-link(href='/order') Place Order
       li.nav-item
         a.nav-link(href='#') View Orders
