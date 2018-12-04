@@ -47,7 +47,7 @@ router.put('/:orderId', async (req, res, next) => {
   try {
     const newStatus = req.body.status;
     const updateData = { status: newStatus };
-    const newData = await Order.findOneAndUpdate({}, {
+    const newData = await Order.findByIdAndUpdate(req.params.orderId, {
       $set: updateData,
     }, {
       new: true,
