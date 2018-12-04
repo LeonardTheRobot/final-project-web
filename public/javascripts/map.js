@@ -45,7 +45,6 @@ export default class Map {
         this.mapContext.fillStyle = 'blue';
         this.zoneLocations.forEach((zone) => {
           const zonePixels = this.coordsToPixels(zone);
-          console.log(zonePixels);
           this.mapContext.fillRect(
             zonePixels.x,
             zonePixels.y,
