@@ -9,7 +9,7 @@ const orderSchema = new Schema({
   },
   zone: {
     type: String,
-    enum: ['A', 'B', 'C', 'D'],
+    enum: ['Red', 'Green', 'Blue', 'Yellow'],
     required: true,
   },
   items: {

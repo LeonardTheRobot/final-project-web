@@ -43,4 +43,20 @@ router.get('/:orderId', async (req, res, next) => {
   }
 });
 
+router.put('/:orderId', async (req, res, next) => {
+  try {
+    const newStatus = req.body.status;
+    const updateData = { status: newStatus };
+    const newData = await Order.findOneAndUpdate({}, {
+      $set: updateData,
+    }, {
+      new: true,
+      runValidators: true,
+    });
+    res.json(newData);
+  } catch (err) {
+    next(err);
+  }
+});
+
 module.exports = router;
