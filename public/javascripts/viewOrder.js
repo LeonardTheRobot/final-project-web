@@ -10,6 +10,19 @@ function updateOrderTable(orderData) {
   $('#status-cell').text(orderData.status);
   $('#loading-text').addClass('d-none');
   $('#order-table').removeClass('d-none');
+  if (orderData.status === 'COMPLETED') {
+    $('#completed-alert').removeClass('d-none');
+    $('#collect-alert').addClass('d-none');
+    $('#in-progress-alert').addClass('d-none');
+  } else if (orderData.status === 'COLLECTION') {
+    $('#completed-alert').addClass('d-none');
+    $('#collect-alert').removeClass('d-none');
+    $('#in-progress-alert').addClass('d-none');
+  } else if (orderData.status === 'IN_PROGRESS') {
+    $('#completed-alert').addClass('d-none');
+    $('#collect-alert').addClass('d-none');
+    $('#in-progress-alert').removeClass('d-none');
+  }
 }
 
 function update(map, orderId) {
