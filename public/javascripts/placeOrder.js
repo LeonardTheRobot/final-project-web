@@ -68,8 +68,7 @@ function bindFormSubmit(items) {
       dataType: 'json',
       success: (res) => {
         // If order is placed successfully, redirect user to view it
-        // TODO: redirect to view for order once implemented
-        window.location.replace(`/api/orders/${res._id}`);
+        window.location.replace(`/order/view/${res._id}`);
       },
     });
   });

@@ -1,38 +1,4 @@
-const mapCanvas = $('#map-canvas').get(0);
-const mapContext = mapCanvas.getContext('2d');
-
-mapContext.fillStyle = 'red';
-const robotSize = 10;
-let lastLocation;
-
-/**
- * Transform coordinate object of form: { x: ?, y: ? }, to
- * pixel x and y values to draw on the map
- */
-function coordsToPixels(coordObj) {
-  return {
-    x: mapCanvas.width / 2 - coordObj.x / 0.05,
-    y: coordObj.y / 0.05 + mapCanvas.height / 2,
-  };
-}
-
-function updateMap(robotLocation) {
-  if (robotLocation) {
-    const rx = robotLocation.x;
-    const ry = robotLocation.y;
-    if (lastLocation && rx === lastLocation.x && ry === lastLocation.y) {
-      console.log('Skip draw (no change)');
-    } else {
-      console.log('Draw');
-      const pixelsObj = coordsToPixels(robotLocation);
-      mapContext.clearRect(0, 0, mapCanvas.width, mapCanvas.height);
-      mapContext.fillRect(pixelsObj.x, pixelsObj.y, robotSize, robotSize);
-      lastLocation = robotLocation;
-    }
-  } else {
-    console.log('NO ROBOT LOCATION');
-  }
-}
+import Map from './map.js';
 
 function updateOrderQueue(robotOrderQueue) {
   // Clear the table
@@ -69,20 +35,23 @@ function updateOrderQueue(robotOrderQueue) {
   });
 }
 
-function update() {
+function update(map) {
   $.get('/api/robot', (robotData) => {
     requestAnimationFrame(() => {
-      updateMap(robotData.location);
+      map.update(robotData.location);
       updateOrderQueue(robotData.orderQueue);
     });
   });
 }
 
-update();
-setInterval(() => {
-  if (lastLocation && $('#auto-update-checkbox').is(':checked')) {
-    update();
-  } else {
-    console.log('Auto-update not checked');
-  }
-}, 10000);
+$(document).ready(() => {
+  const map = new Map($('#map-canvas'));
+  update(map);
+  setInterval(() => {
+    if ($('#auto-update-checkbox').is(':checked')) {
+      update(map);
+    } else {
+      console.log('Auto-update not checked');
+    }
+  }, 5000);
+});

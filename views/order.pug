@@ -1,0 +1,37 @@
+extends layout
+
+block content
+  .container-fluid.container-custom
+    h2 Order ##{orderId}
+    form
+      .checkbox
+        label
+          input#auto-update-checkbox(type='checkbox', value='', checked)
+          |  Auto-update
+    .card
+      .card-body
+        .row
+          .col-md-6.text-center
+            img#map-image(src='/images/CS-LG-2.png')
+            canvas#map-canvas(width='576', height='486')
+          .col-md-6
+            p#loading-text Loading data...
+            table#order-table.table.table-striped.table-bordered.d-none
+              tbody
+                tr
+                  th(scope='row') ID
+                  td#id-cell= orderId
+                tr
+                  th(scope='row') User
+                  td#user-cell
+                tr
+                  th(scope='row') Zone
+                  td#zone-cell
+                tr
+                  th(scope='row') Items
+                  td#items-cell
+                    ul
+                tr
+                  th(scope='row') Status
+                  td#status-cell
+  script(type='module', src='/javascripts/viewOrder.js')
