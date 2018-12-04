@@ -10,8 +10,8 @@ function populateUsers(users) {
 function populateZones(zones) {
   zones.forEach((zone) => {
     $('#zone-select').append($('<option>', {
-      value: zone,
-      text: zone,
+      value: zone.name,
+      text: zone.name,
     }));
   });
 }
@@ -80,8 +80,10 @@ $.get('/api/users', (users) => {
 });
 
 // Populate the zone select
-const zones = ['A', 'B', 'C', 'D'];
-populateZones(zones);
+$.get('/javascripts/zones.json', (zones) => {
+  const dropOffZones = zones.filter(zone => zone.name !== 'Pickup');
+  populateZones(dropOffZones);
+});
 
 // Get all items from the API and populate the list of items
 $.get('/api/items', (items) => {
