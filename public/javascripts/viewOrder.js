@@ -10,15 +10,23 @@ function updateOrderTable(orderData) {
   $('#status-cell').text(orderData.status);
   $('#loading-text').addClass('d-none');
   $('#order-table').removeClass('d-none');
-  if (orderData.status === 'COMPLETED') {
+  if (orderData.status === 'FAILED') {
+    $('#failed-alert').removeClass('d-none');
+    $('#completed-alert').addClass('d-none');
+    $('#collect-alert').addClass('d-none');
+    $('#in-progress-alert').addClass('d-none');
+  } else if (orderData.status === 'COMPLETED') {
+    $('#failed-alert').addClass('d-none');
     $('#completed-alert').removeClass('d-none');
     $('#collect-alert').addClass('d-none');
     $('#in-progress-alert').addClass('d-none');
   } else if (orderData.status === 'COLLECTION') {
+    $('#failed-alert').addClass('d-none');
     $('#completed-alert').addClass('d-none');
     $('#collect-alert').removeClass('d-none');
     $('#in-progress-alert').addClass('d-none');
   } else if (orderData.status === 'IN_PROGRESS') {
+    $('#failed-alert').addClass('d-none');
     $('#completed-alert').addClass('d-none');
     $('#collect-alert').addClass('d-none');
     $('#in-progress-alert').removeClass('d-none');
