@@ -47,18 +47,19 @@ function populateOrderTable(orders) {
       itemsList.append($('<li>').text(item));
     });
 
+    // Create cell for order status with colour coding
+    const orderStatusCell = $('<td>').text(order.status);
+    if (statusColourClassMapping[order.status]) {
+      orderStatusCell.addClass(statusColourClassMapping[order.status]);
+    }
+
     // Create a new table row from the data for this order
     const row = $('<tr>').append(
       $('<td>').append(idLink),
       $('<td>').text(order.user),
       $('<td>').text(order.zone),
       $('<td>').append(itemsList),
-      $('<td>').text(order.status),
-    );
-
-    if (statusColourClassMapping[order.status]) {
-      row.addClass(statusColourClassMapping[order.status]);
-    }
+    ).append(orderStatusCell);
 
     $('#order-table-body').append(row);
   });

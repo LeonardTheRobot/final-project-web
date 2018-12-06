@@ -27,6 +27,12 @@ function updateOrderQueue(robotOrderQueue) {
         itemsList.append($('<li>').text(item));
       });
 
+      // Create cell for order status with colour coding
+      const orderStatusCell = $('<td>').text(orderData.status);
+      if (statusColourClassMapping[orderData.status]) {
+        orderStatusCell.addClass(statusColourClassMapping[orderData.status]);
+      }
+
       // Create a new table row from the data for this order
       const row = $('<tr>').append(
         $('<td>').text(i + 1),
@@ -34,12 +40,7 @@ function updateOrderQueue(robotOrderQueue) {
         $('<td>').text(orderData.user),
         $('<td>').text(orderData.zone),
         $('<td>').append(itemsList),
-        $('<td>').text(orderData.status),
-      );
-
-      if (statusColourClassMapping[orderData.status]) {
-        row.addClass(statusColourClassMapping[orderData.status]);
-      }
+      ).append(orderStatusCell);
 
       // Append the row in the correct order based on the orderQueue rather than the order in which
       // the order API calls returned
