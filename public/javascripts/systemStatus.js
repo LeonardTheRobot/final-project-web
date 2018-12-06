@@ -55,11 +55,25 @@ function updateOrderQueue(robotOrderQueue) {
   });
 }
 
+function updateInventory(inventory) {
+  const rows = [];
+  inventory.forEach((item) => {
+    const row = $('<tr>').append(
+      $('<td>').text(item.item),
+      $('<td>').text(item.quantity),
+    );
+    rows.push(row);
+  });
+  $('#inventory-table-body').empty();
+  rows.forEach(row => $('#inventory-table-body').append(row));
+}
+
 function update(map) {
   $.get('/api/robot', (robotData) => {
     requestAnimationFrame(() => {
       map.update(robotData.location);
       updateOrderQueue(robotData.orderQueue);
+      updateInventory(robotData.inventory);
     });
   });
 }
