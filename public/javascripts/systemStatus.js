@@ -43,8 +43,8 @@ function updateOrderQueue(robotOrderQueue) {
           $('<td>').append(itemsList),
         ).append(orderStatusCell);
 
-        // Append the row in the correct order based on the orderQueue rather than the order in which
-        // the order API calls returned
+        // Append the row in the correct order based on the orderQueue rather than the order in
+        // which the order API calls returned
         // If this is the first in the queue or if this is the first API return, place the row first
         // Otherwise, place the row in its correct position based on the index of the forEach loop
         if (i === 0 || $('#order-queue-table-body > tr').length === 0) {
