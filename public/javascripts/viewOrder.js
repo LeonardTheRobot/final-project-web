@@ -54,5 +54,5 @@ $(document).ready(() => {
     } else {
       console.log('Auto-update not checked');
     }
-  }, 5000);
+  }, 3000);
 });
