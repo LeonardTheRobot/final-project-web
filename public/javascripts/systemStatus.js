@@ -15,41 +15,45 @@ function updateOrderQueue(robotOrderQueue) {
   // Iterate over each order in the queue
   robotOrderQueue.forEach((orderId, i) => {
     $.get(`/api/orders/${orderId}`, (orderData) => {
-      // Create a link to the view order page for each order in the queue
-      const orderIdLink = $('<a>', {
-        href: `/order/view/${orderId}`,
-        text: orderId,
-      });
+      if (orderData) {
+        // Create a link to the view order page for each order in the queue
+        const orderIdLink = $('<a>', {
+          href: `/order/view/${orderId}`,
+          text: orderId,
+        });
 
-      // Create a bullet point list of the items in this order
-      const itemsList = $('<ul>');
-      orderData.items.forEach((item) => {
-        itemsList.append($('<li>').text(item));
-      });
+        // Create a bullet point list of the items in this order
+        const itemsList = $('<ul>');
+        orderData.items.forEach((item) => {
+          itemsList.append($('<li>').text(item));
+        });
 
-      // Create cell for order status with colour coding
-      const orderStatusCell = $('<td>').text(orderData.status);
-      if (statusColourClassMapping[orderData.status]) {
-        orderStatusCell.addClass(statusColourClassMapping[orderData.status]);
-      }
+        // Create cell for order status with colour coding
+        const orderStatusCell = $('<td>').text(orderData.status);
+        if (statusColourClassMapping[orderData.status]) {
+          orderStatusCell.addClass(statusColourClassMapping[orderData.status]);
+        }
 
-      // Create a new table row from the data for this order
-      const row = $('<tr>').append(
-        $('<td>').text(i + 1),
-        $('<td>').append(orderIdLink),
-        $('<td>').text(orderData.user),
-        $('<td>').text(orderData.zone),
-        $('<td>').append(itemsList),
-      ).append(orderStatusCell);
+        // Create a new table row from the data for this order
+        const row = $('<tr>').append(
+          $('<td>').text(i + 1),
+          $('<td>').append(orderIdLink),
+          $('<td>').text(orderData.user),
+          $('<td>').text(orderData.zone),
+          $('<td>').append(itemsList),
+        ).append(orderStatusCell);
 
-      // Append the row in the correct order based on the orderQueue rather than the order in which
-      // the order API calls returned
-      // If this is the first in the queue or if this is the first API return, place the row first
-      // Otherwise, place the row in its correct position based on the index of the forEach loop
-      if (i === 0 || $('#order-queue-table-body > tr').length === 0) {
-        $('#order-queue-table-body').prepend(row);
+        // Append the row in the correct order based on the orderQueue rather than the order in which
+        // the order API calls returned
+        // If this is the first in the queue or if this is the first API return, place the row first
+        // Otherwise, place the row in its correct position based on the index of the forEach loop
+        if (i === 0 || $('#order-queue-table-body > tr').length === 0) {
+          $('#order-queue-table-body').prepend(row);
+        } else {
+          $(`#order-queue-table-body > tr:nth-child(${i})`).after(row);
+        }
       } else {
-        $(`#order-queue-table-body > tr:nth-child(${i})`).after(row);
+        console.log('No orders in queue');
       }
     });
   });
