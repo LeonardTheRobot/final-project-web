@@ -7,6 +7,8 @@ function updateOrderTable(orderData) {
   orderData.items.forEach((item) => {
     $('#items-cell > ul').append($('<li>').text(item));
   });
+  const readableTime = orderData.orderedAt.split('T');
+  $('#ordered-at-cell').text([readableTime[0], readableTime[1].substring(0, readableTime[1].length - 1)].join(' @ '));
   $('#status-cell').text(orderData.status);
   $('#loading-text').addClass('d-none');
   $('#order-table').removeClass('d-none');
