@@ -6,6 +6,12 @@ function updateOrderQueue(robotOrderQueue) {
   // Iterate over each order in the queue
   robotOrderQueue.forEach((orderId, i) => {
     $.get(`/api/orders/${orderId}`, (orderData) => {
+      // Create a link to the view order page for each order in the queue
+      const orderIdLink = $('<a>', {
+        href: `/order/view/${orderId}`,
+        text: orderId,
+      });
+
       // Create a bullet point list of the items in this order
       const itemsList = $('<ul>');
       orderData.items.forEach((item) => {
@@ -15,7 +21,7 @@ function updateOrderQueue(robotOrderQueue) {
       // Create a new table row from the data for this order
       const row = $('<tr>').append(
         $('<td>').text(i + 1),
-        $('<td>').text(orderId),
+        $('<td>').append(orderIdLink),
         $('<td>').text(orderData.user),
         $('<td>').text(orderData.zone),
         $('<td>').append(itemsList),
