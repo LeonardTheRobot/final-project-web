@@ -1,38 +1,13 @@
-const mapCanvas = $('#map-canvas').get(0);
-const mapContext = mapCanvas.getContext('2d');
+import Map from './map.js';
 
-mapContext.fillStyle = 'red';
-const robotSize = 10;
-let lastLocation;
-
-/**
- * Transform coordinate object of form: { x: ?, y: ? }, to
- * pixel x and y values to draw on the map
- */
-function coordsToPixels(coordObj) {
-  return {
-    x: mapCanvas.width / 2 - coordObj.x / 0.05,
-    y: coordObj.y / 0.05 + mapCanvas.height / 2,
-  };
-}
-
-function updateMap(robotLocation) {
-  if (robotLocation) {
-    const rx = robotLocation.x;
-    const ry = robotLocation.y;
-    if (lastLocation && rx === lastLocation.x && ry === lastLocation.y) {
-      console.log('Skip draw (no change)');
-    } else {
-      console.log('Draw');
-      const pixelsObj = coordsToPixels(robotLocation);
-      mapContext.clearRect(0, 0, mapCanvas.width, mapCanvas.height);
-      mapContext.fillRect(pixelsObj.x, pixelsObj.y, robotSize, robotSize);
-      lastLocation = robotLocation;
-    }
-  } else {
-    console.log('NO ROBOT LOCATION');
-  }
-}
+// Text colour status mapping
+const statusColourClassMapping = {
+  COLLECTION: 'text-warning',
+  IN_PROGRESS: 'text-info',
+  PENDING: null,
+  COMPLETED: 'text-success',
+  FAILED: 'text-danger',
+};
 
 function updateOrderQueue(robotOrderQueue) {
   // Clear the table
@@ -40,49 +15,81 @@ function updateOrderQueue(robotOrderQueue) {
   // Iterate over each order in the queue
   robotOrderQueue.forEach((orderId, i) => {
     $.get(`/api/orders/${orderId}`, (orderData) => {
-      // Create a bullet point list of the items in this order
-      const itemsList = $('<ul>');
-      orderData.items.forEach((item) => {
-        itemsList.append($('<li>').text(item));
-      });
+      if (orderData) {
+        // Create a link to the view order page for each order in the queue
+        const orderIdLink = $('<a>', {
+          href: `/order/view/${orderId}`,
+          text: orderId,
+        });
 
-      // Create a new table row from the data for this order
-      const row = $('<tr>').append(
-        $('<td>').text(i + 1),
-        $('<td>').text(orderId),
-        $('<td>').text(orderData.user),
-        $('<td>').text(orderData.zone),
-        $('<td>').append(itemsList),
-        $('<td>').text(orderData.status),
-      );
+        // Create a bullet point list of the items in this order
+        const itemsList = $('<ul>');
+        orderData.items.forEach((item) => {
+          itemsList.append($('<li>').text(item));
+        });
 
-      // Append the row in the correct order based on the orderQueue rather than the order in which
-      // the order API calls returned
-      // If this is the first in the queue or if this is the first API return, place the row first
-      // Otherwise, place the row in its correct position based on the index of the forEach loop
-      if (i === 0 || $('#order-queue-table-body > tr').length === 0) {
-        $('#order-queue-table-body').prepend(row);
+        // Create cell for order status with colour coding
+        const orderStatusCell = $('<td>').text(orderData.status);
+        if (statusColourClassMapping[orderData.status]) {
+          orderStatusCell.addClass(statusColourClassMapping[orderData.status]);
+        }
+
+        // Create a new table row from the data for this order
+        const row = $('<tr>').append(
+          $('<td>').text(i + 1),
+          $('<td>').append(orderIdLink),
+          $('<td>').text(orderData.user),
+          $('<td>').text(orderData.zone),
+          $('<td>').append(itemsList),
+        ).append(orderStatusCell);
+
+        // Append the row in the correct order based on the orderQueue rather than the order in
+        // which the order API calls returned
+        // If this is the first in the queue or if this is the first API return, place the row first
+        // Otherwise, place the row in its correct position based on the index of the forEach loop
+        if (i === 0 || $('#order-queue-table-body > tr').length === 0) {
+          $('#order-queue-table-body').prepend(row);
+        } else {
+          $(`#order-queue-table-body > tr:nth-child(${i})`).after(row);
+        }
       } else {
-        $(`#order-queue-table-body > tr:nth-child(${i})`).after(row);
+        console.log('No orders in queue');
       }
     });
   });
 }
 
-function update() {
+function updateInventory(inventory) {
+  const rows = [];
+  inventory.forEach((item) => {
+    const row = $('<tr>').append(
+      $('<td>').text(item.item),
+      $('<td>').text(item.quantity),
+    );
+    rows.push(row);
+  });
+  $('#inventory-table-body').empty();
+  rows.forEach(row => $('#inventory-table-body').append(row));
+}
+
+function update(map) {
   $.get('/api/robot', (robotData) => {
     requestAnimationFrame(() => {
-      updateMap(robotData.location);
+      map.update(robotData.location);
       updateOrderQueue(robotData.orderQueue);
+      updateInventory(robotData.inventory);
     });
   });
 }
 
-update();
-setInterval(() => {
-  if (lastLocation && $('#auto-update-checkbox').is(':checked')) {
-    update();
-  } else {
-    console.log('Auto-update not checked');
-  }
-}, 10000);
+$(document).ready(() => {
+  const map = new Map($('#map-canvas'));
+  update(map);
+  setInterval(() => {
+    if ($('#auto-update-checkbox').is(':checked')) {
+      update(map);
+    } else {
+      console.log('Auto-update not checked');
+    }
+  }, 5000);
+});

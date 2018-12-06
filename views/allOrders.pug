@@ -1,0 +1,17 @@
+extends layout
+
+block content
+  .container.container-custom
+    h2 All Orders
+    .card
+      .card-body.bg-light
+        table.table.table-striped.table-bordered
+              thead
+                tr
+                  th ID
+                  th User
+                  th Zone
+                  th Items
+                  th Status
+              tbody#order-table-body
+  script(src='/javascripts/viewAllOrders.js')

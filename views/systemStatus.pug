@@ -6,7 +6,7 @@ block content
     form
       .checkbox
         label
-          input#auto-update-checkbox(type='checkbox', value='')
+          input#auto-update-checkbox(type='checkbox', value='', checked)
           |  Auto-update
     .row
       .col-auto
@@ -30,4 +30,13 @@ block content
                   th Items
                   th Status
               tbody#order-queue-table-body
-  script(src='/javascripts/systemStatus.js')
+      .col-auto
+        .card
+          .card-body
+            h4.card-title Robot Inventory
+            table.table.table-striped.table-bordered
+              thead
+                th Item
+                th Quantity
+              tbody#inventory-table-body
+  script(type='module', src='/javascripts/systemStatus.js')
