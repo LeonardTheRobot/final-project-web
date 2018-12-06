@@ -1,5 +1,14 @@
 import Map from './map.js';
 
+// Text colour status mapping
+const statusColourClassMapping = {
+  COLLECTION: 'text-warning',
+  IN_PROGRESS: 'text-info',
+  PENDING: null,
+  COMPLETED: 'text-success',
+  FAILED: 'text-danger',
+};
+
 function updateOrderQueue(robotOrderQueue) {
   // Clear the table
   $('#order-queue-table-body').empty();
@@ -27,6 +36,10 @@ function updateOrderQueue(robotOrderQueue) {
         $('<td>').append(itemsList),
         $('<td>').text(orderData.status),
       );
+
+      if (statusColourClassMapping[orderData.status]) {
+        row.addClass(statusColourClassMapping[orderData.status]);
+      }
 
       // Append the row in the correct order based on the orderQueue rather than the order in which
       // the order API calls returned
