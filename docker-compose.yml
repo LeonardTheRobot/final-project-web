@@ -2,9 +2,10 @@ version: '3'
 services:
   web:
     build: .
+    image: samchatfield/coffeebot:latest
     command: npm run dev
     volumes:
       - .:/usr/src/app/
       - /usr/src/app/node_modules/
     ports:
-      - "8080:8080"
+      - 8080:8080
